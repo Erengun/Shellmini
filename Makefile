@@ -6,7 +6,7 @@
 #    By: egun <egun@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/22 13:38:18 by aperez-b          #+#    #+#              #
-#    Updated: 2023/01/23 18:52:16 by egun             ###   ########.fr        #
+#    Updated: 2023/01/23 19:21:36 by egun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,17 +23,14 @@ WHITE = \033[0;97m
 
 # Make variables
 AR = ar rcs
-CFLAGS = -Wall -Wextra -Werror -MD -g3 
+CFLAGS = -Wall -Wextra -Werror 
 RM = rm -f
 CC = gcc
 SRC_DIR = src
-OBJ_DIR = obj
-BIN_DIR = bin
 UTILS_DIR = utils
 UTILS = utils/utils.a
 LIBFT = libft/libft.a
-BIN = minishell
-NAME = $(BIN_DIR)/$(BIN)
+NAME = minishell
 USERNAME = $(shell whoami)
 
 READLINE_LIB = -L./lib/readline/lib -lreadline
@@ -46,7 +43,7 @@ SRC = main.c builtins.c ft_strtrim_all.c exec.c			\
 	  get_next_line.c get_next_line_utils.c prompt.c	\
 	  ft_cmdsubsplit.c signal.c parse_args.c get_cmd.c
 
-OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
+OBJ =  $(addprefix $(SRC_DIR)/, $(SRC:.c=.o))
 
 OBJ_LFT = $(addprefix $(OBJ_LFT_DIR)/, $(SRC_LFT:.c=.o))
 
@@ -55,11 +52,11 @@ all: $(LIB) $(NAME)
 $(LIB):
 	make -C ./lib
 
-$(NAME): create_dirs compile_libft compile_utils $(OBJ)
-	@$(CC) -L/Users/$(USERNAME)/readline/lib $(INCLUDES) $(CFLAGS) $(CDEBUG) $(OBJ) $(LIBFT) $(UTILS) -lreadline -o $@
+$(NAME): compile_libft compile_utils $(OBJ)
+	@$(CC) -L/Users/$(USERNAME)/readline/lib $(INCLUDES) $(CFLAGS) $(OBJ) $(LIBFT) $(UTILS) -lreadline -o $@
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@$(CC) -I/Users/$(USERNAME)/include $(INCLUDES) $(CFLAGS) $(CDEBUG) -c $< -o $@
+$(SRC_DIR)/%.o: $(SRC_DIR)/%.c
+	@$(CC) -I/Users/$(USERNAME)/include $(INCLUDES) $(CFLAGS) -c $< -o $@
 
 compile_libft:
 	@if [ ! -d "libft" ]; then \
@@ -70,18 +67,23 @@ compile_libft:
 compile_utils:
 	@make -C ./utils
 
-create_dirs:
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(BIN_DIR)
-
 clean:
 	@if [ -d "libft" ]; then \
 		make clean -C libft/; \
 	fi
-	@$(RM) -r $(OBJ_DIR)
+	@if [ -d "utils" ]; then \
+		make clean -C utils/; \
+	fi
+	@$(RM) -r $(SRC_DIR)/$(OBJ)
 
 fclean: clean
-	@$(RM) -r $(BIN_DIR)
+	@if [ -d "libft" ]; then \
+		make fclean -C libft/; \
+	fi
+	@if [ -d "utils" ]; then \
+		make fclean -C utils/; \
+	fi
+	@$(RM) -r minishell
 
 re: fclean
 	@make all
