@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aperez-b <aperez-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egun <egun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 17:02:33 by aperez-b          #+#    #+#             */
-/*   Updated: 2022/03/14 16:19:23 by aperez-b         ###   ########.fr       */
+/*   Updated: 2023/01/23 19:10:08 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,30 +45,10 @@ static char	*get_home(t_prompt prompt)
 static char	*get_user(t_prompt prompt)
 {
 	char	**user;
-	char	*temp;
-	char	*temp2;
 
 	user = NULL;
-	temp2 = NULL;
 	exec_custom(&user, "/usr/bin/whoami", "whoami", prompt.envp);
-	if (!user)
-		user = ft_extend_matrix(user, "guest");
-	if (!ft_strncmp(user[0], "root", 4))
-		temp2 = ft_strjoin(NULL, RED);
-	else if ((int)(user[0][0]) % 5 == 0)
-		temp2 = ft_strjoin(NULL, CYAN);
-	else if ((int)(user[0][0]) % 5 == 1)
-		temp2 = ft_strjoin(NULL, GRAY);
-	else if ((int)(user[0][0]) % 5 == 2)
-		temp2 = ft_strjoin(NULL, GREEN);
-	else if ((int)(user[0][0]) % 5 == 3)
-		temp2 = ft_strjoin(NULL, MAGENTA);
-	else
-		temp2 = ft_strjoin(NULL, YELLOW);
-	temp = ft_strjoin(temp2, *user);
-	free(temp2);
-	ft_free_matrix(&user);
-	return (temp);
+	return (*user);
 }
 
 char	*mini_getprompt(t_prompt prompt)

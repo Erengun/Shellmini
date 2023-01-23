@@ -6,7 +6,7 @@
 #    By: egun <egun@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/22 13:38:18 by aperez-b          #+#    #+#              #
-#    Updated: 2023/01/23 18:14:05 by egun             ###   ########.fr        #
+#    Updated: 2023/01/23 18:52:16 by egun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,9 @@ CC = gcc
 SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = bin
-LIBFT = libft/bin/libft.a
+UTILS_DIR = utils
+UTILS = utils/utils.a
+LIBFT = libft/libft.a
 BIN = minishell
 NAME = $(BIN_DIR)/$(BIN)
 USERNAME = $(shell whoami)
@@ -53,17 +55,20 @@ all: $(LIB) $(NAME)
 $(LIB):
 	make -C ./lib
 
-$(NAME): create_dirs compile_libft $(OBJ)
-	@$(CC) -L/Users/$(USERNAME)/readline/lib $(INCLUDES) $(CFLAGS) $(CDEBUG) $(OBJ) $(LIBFT) -lreadline -o $@
+$(NAME): create_dirs compile_libft compile_utils $(OBJ)
+	@$(CC) -L/Users/$(USERNAME)/readline/lib $(INCLUDES) $(CFLAGS) $(CDEBUG) $(OBJ) $(LIBFT) $(UTILS) -lreadline -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(CC) -I/Users/$(USERNAME)/include $(INCLUDES) $(CFLAGS) $(CDEBUG) -c $< -o $@
 
 compile_libft:
 	@if [ ! -d "libft" ]; then \
-		git clone https://github.com/madebypixel02/libft.git; \
+		git clone https://github.com/omerkarakelle/libft.git; \
 	fi
 	@make -C libft
+
+compile_utils:
+	@make -C ./utils
 
 create_dirs:
 	@mkdir -p $(OBJ_DIR)

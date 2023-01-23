@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aperez-b <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: egun <egun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 15:08:50 by aperez-b          #+#    #+#             */
-/*   Updated: 2022/03/14 16:05:19 by aperez-b         ###   ########.fr       */
+/*   Updated: 2023/01/23 18:51:33 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 # define MINISHELL_H
 
-# include "../libft/inc/libft.h"
+# include "../libft/libft.h"
 # include "colors.h"
 # include "get_next_line.h"
 # include <fcntl.h>
@@ -24,6 +24,7 @@
 # include <sys/wait.h>
 # include <dirent.h>
 # include <sys/ioctl.h>
+# include <stdio.h>
 
 # define READ_END 0
 # define WRITE_END 1
