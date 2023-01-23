@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aperez-b <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: egun <egun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 15:44:53 by aperez-b          #+#    #+#             */
-/*   Updated: 2022/03/08 12:38:07 by aperez-b         ###   ########.fr       */
+/*   Updated: 2023/01/23 17:21:43 by egun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	handle_sigint(int sig)
 	{
 		g_status = 130;
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		rl_replace_line("", 0);
+		//rl_replace_line("", 0);
 		rl_on_new_line();
 	}
 }
